@@ -292,3 +292,54 @@ button[type="submit"]:hover {
 .footer-contact-text p a.footer-link:hover {
   color: #ddd;           /* lighter on hover */
 }
+.know-more-circle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  outline: none;
+}
+/* Rotation Animation */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  from { transform: rotate(0deg);}
+  to { transform: rotate(360deg);}
+}
+
+@keyframes lightFlash {
+  0%, 100% { box-shadow: 0 0 0px 0px rgba(255,255,255,0); }
+  50% { box-shadow: 0 0 60px 35px rgba(255,255,255,0.5); }
+}
+
+/* Container for optional future styling */
+.earth-container {
+  width: 300px;
+  height: 300px;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  /* No margin, border or padding to prevent gaps */
+}
+
+/* Earth image with rotation AND glow animation—no gap */
+.rotating-earth {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+  animation: rotate 20s linear infinite, lightFlash 2.5s ease-in-out infinite;
+  /* No margin or border! */
+}

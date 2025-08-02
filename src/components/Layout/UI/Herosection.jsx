@@ -1,6 +1,6 @@
-import { FaLongArrowAltRight } from "react-icons/fa";
+ import { FaLongArrowAltRight } from "react-icons/fa";
 
-export const Herosection = () => {   // Match exactly the file/component name capitalization
+export const Herosection = () => {
   return (
     <main className="hero-section main">
       <div className="container grid grid-two-cols">
@@ -15,13 +15,14 @@ export const Herosection = () => {   // Match exactly the file/component name ca
             Start Exploring <FaLongArrowAltRight />
           </button>
         </div>
-        <div className="hero-image">
-          <img
-            src="/images/pexels-pixabay-41953.jpg"
-            alt="beautiful scenery"
-            className="banner-image"
-            style={{ width: "300px", height: "auto" }}
-          />
+        <div className="hero-image" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <div className="earth-container">
+            <img
+              src="/images/pexels-pixabay-41953.jpg"
+              alt="Rotating earth"
+              className="rotating-earth"
+            />
+          </div>
         </div>
       </div>
     </main>
