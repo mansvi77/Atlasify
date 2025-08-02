@@ -343,3 +343,197 @@ button[type="submit"]:hover {
   animation: rotate 20s linear infinite, lightFlash 2.5s ease-in-out infinite;
   /* No margin or border! */
 }
+
+/* Container: all controls in a horizontal row */
+.section-searchFilter {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* spacing between controls */
+  margin-top: 1rem;
+  margin-bottom: 1.5rem; /* spacing below controls before cards */
+  justify-content: center; /* center horizontally */
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
+/* Search input styled like a light blue button */
+.section-searchFilter input[type="text"] {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #90caf9; /* light blue border */
+  background-color: #e3f2fd; /* very light blue bg */
+  color: #0d47a1; /* dark blue text */
+  outline: none;
+  transition: border-color 0.3s;
+  min-width: 200px; /* comfortable width for search */
+}
+
+.section-searchFilter input[type="text"]:focus {
+  border-color: #1976d2; /* stronger blue on focus */
+  box-shadow: 0 0 5px #64b5f6; /* subtle glow */
+}
+
+/* Select dropdown styled similarly */
+.section-searchFilter select.select-section {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #90caf9;
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s;
+  min-width: 160px;
+}
+
+.section-searchFilter select.select-section:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 5px #64b5f6;
+}
+
+/* Sort buttons - Asc and Desc */
+.section-searchFilter button {
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #1976d2; /* blue */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  min-width: 70px;
+}
+
+.section-searchFilter button:hover,
+.section-searchFilter button:focus {
+  background-color: #0d47a1; /* darker blue on hover/focus */
+  outline: none;
+}
+
+/* Horizontal highlighted separator line below the filter controls */
+.filter-separator {
+  width: 100%;
+  height: 4px; /* thickness of highlight line */
+  background: linear-gradient(90deg, #1976d2, #90caf9); /* blue gradient */
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+/* Make the entire country details page background jet-black */
+.country-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  background: #101114; /* almost pure black */
+}
+
+/* The main detail card: grey-black, centered with shadow and rounded corners */
+.container-card.bg-white-box {
+  width: 100%;
+  max-width: 600px;
+  background: #21222a; /* dark, slightly warmer black */
+  border-radius: 14px;
+  border: 1.5px solid #2d2e36;
+  box-shadow: 0 4px 32px rgba(10,18,32,0.55);
+  margin: 2.5rem auto;
+  padding: 2rem 2rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Flag is centered and sized for visibility */
+.country-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.country-image img {
+  width: 170px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1.5px solid #313753;
+  box-shadow: 0 2px 14px rgba(90,180,255,0.08);
+  background: #181923;
+}
+
+/* Title and info centered and styled for a dark UI */
+.card-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 1.2rem 0 1.7rem 0;
+  color: #71caff;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+}
+
+/* Info block: all info neatly centered within card */
+.infoContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.8rem;
+}
+
+.infoContainer p,
+.infoContainer a {
+  color: #d6e4fa;
+  font-size: 1.08rem;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+.infoContainer span {
+  font-weight: 600;
+  color: #3fa9f5;
+}
+
+.infoContainer a {
+  text-decoration: underline;
+  color: #58c3ff;
+}
+
+.infoContainer a:hover {
+  color: #80d6ff;
+}
+
+/* Go back button is styled, bright on dark and easy to spot */
+.country-card-backBin {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.country-card-backBin .backBtn button {
+  padding: 0.5rem 2.2rem;
+  background: #222b45;
+  color: #71caff;
+  border-radius: 26px;
+  border: 1.5px solid #3fa9f5;
+  font-size: 1.07rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.07em;
+  transition: 
+    background 0.23s,
+    color 0.23s,
+    box-shadow 0.23s;
+  box-shadow: 0 2px 16px rgba(40,160,255,0.10);
+}
+
+.country-card-backBin .backBtn button:hover,
+.country-card-backBin .backBtn button:focus {
+  background: #3fa9f5;
+  color: #1a232e;
+  outline: none;
+  box-shadow: 0 4px 16px rgba(40,180,220,0.13);
+}
+

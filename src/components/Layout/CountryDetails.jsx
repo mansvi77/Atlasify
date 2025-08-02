@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useTransition } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { getCountryIndData } from "../../api/postApi";
-import { NavLink } from "react-router-dom";
+import { SearchFilter } from "../Layout/UI/SearchFilter";
 
 export const CountryDetails = () => {
   const { id } = useParams();
   const [country, setCountry] = useState(null);
   const [error, setError] = useState(null);
   const [isPending, startTransition] = useTransition();
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     if (!id) return;
@@ -32,12 +34,14 @@ export const CountryDetails = () => {
   }, [id]);
 
   if (isPending) return <div>Loading...</div>;
+
   if (error)
     return (
       <div style={{ color: "red", padding: "2rem", textAlign: "center" }}>
         {error}
       </div>
     );
+
   if (!country)
     return (
       <div style={{ padding: "2rem", color: "#555", textAlign: "center" }}>
@@ -45,7 +49,7 @@ export const CountryDetails = () => {
       </div>
     );
 
-  // Destructure all required fields safely with defaults
+  // Destructure all country fields safely
   const {
     flags = {},
     name = {},
@@ -71,18 +75,12 @@ export const CountryDetails = () => {
 
   const nativeNames =
     name.nativeName && typeof name.nativeName === "object"
-      ? Object.values(name.nativeName)
-          .filter((n) => n?.common)
-          .map((n) => n.common)
-          .join(", ")
+      ? Object.values(name.nativeName).filter(n => n?.common).map(n => n.common).join(", ")
       : "N/A";
 
   const currencyStr =
     currencies && typeof currencies === "object"
-      ? Object.values(currencies)
-          .filter((c) => c?.name)
-          .map((c) => `${c.name} (${c.symbol || ""})`.trim())
-          .join(", ")
+      ? Object.values(currencies).filter(c => c?.name).map(c => `${c.name} (${c.symbol || ""})`.trim()).join(", ")
       : "N/A";
 
   const languageStr =
@@ -90,11 +88,9 @@ export const CountryDetails = () => {
       ? Object.values(languages).join(", ")
       : "N/A";
 
-  const borderStr =
-    Array.isArray(borders) && borders.length > 0 ? borders.join(", ") : "N/A";
+  const borderStr = Array.isArray(borders) && borders.length > 0 ? borders.join(", ") : "N/A";
 
-  const demonymStr =
-    demonyms && demonyms.eng ? `${demonyms.eng.m} (m), ${demonyms.eng.f} (f)` : "N/A";
+  const demonymStr = demonyms && demonyms.eng ? `${demonyms.eng.m} (m), ${demonyms.eng.f} (f)` : "N/A";
 
   const timezoneStr = timezones && timezones.length ? timezones.join(", ") : "N/A";
 
@@ -103,22 +99,19 @@ export const CountryDetails = () => {
   const [lat, lng] = Array.isArray(latlng) && latlng.length === 2 ? latlng : [null, null];
 
   return (
-    <section
-      className="card country-details-card container"
-      style={{
-        padding: "2rem",
-        maxWidth: "900px",
-        margin: "2rem auto",
-        backgroundColor: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 0 15px rgba(0,0,0,0.1)",
-      }}
-    >
+    <section className="country-section" style={{ padding: "1rem" }}>
+      <SearchFilter
+        search={search}
+        setSearch={setSearch}
+        filter={filter}
+        setFilter={setFilter}
+      />
+
       <div
         className="container-card bg-white-box"
         style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}
       >
-        {/* Flag Section - Left */}
+        {/* Flag Section */}
         <div
           className="country-image"
           style={{
@@ -142,10 +135,10 @@ export const CountryDetails = () => {
           />
         </div>
 
-        {/* Details Section - Right */}
+        {/* Details Section */}
         <div
           className="country-content"
-          style={{ flex: "1", display: "flex", flexDirection: "column", wordBreak: 'break-word' }}
+          style={{ flex: "1", display: "flex", flexDirection: "column", wordBreak: "break-word" }}
         >
           <h2 className="card-title" style={{ marginBottom: "1rem" }}>
             {name.official || "N/A"}
@@ -161,79 +154,25 @@ export const CountryDetails = () => {
               color: "#333",
             }}
           >
-            <p>
-              <span style={{ fontWeight: "600" }}>Native Names: </span>
-              {nativeNames}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Languages: </span>
-              {languageStr}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Population: </span>
-              {population ? population.toLocaleString() : "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Region: </span>
-              {region || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Subregion: </span>
-              {subregion || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Capital: </span>
-              {Array.isArray(capital) && capital.length ? capital.join(", ") : "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Top Level Domain: </span>
-              {Array.isArray(tld) && tld.length ? tld.join(", ") : "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Currencies: </span>
-              {currencyStr}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Border Countries: </span>
-              {borderStr}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Area: </span>
-              {area ? `${area.toLocaleString()} km²` : "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Timezones: </span>
-              {timezoneStr}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Demonyms: </span>
-              {demonymStr}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>IOC Code: </span>
-              {cioc || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>FIFA Code: </span>
-              {fifa || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Status: </span>
-              {status || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Start Of Week: </span>
-              {startOfWeek || "N/A"}
-            </p>
-            <p>
-              <span style={{ fontWeight: "600" }}>Continents: </span>
-              {continentStr}
-            </p>
+            <p><span style={{ fontWeight: "600" }}>Native Names:</span> {nativeNames}</p>
+            <p><span style={{ fontWeight: "600" }}>Languages:</span> {languageStr}</p>
+            <p><span style={{ fontWeight: "600" }}>Population:</span> {population ? population.toLocaleString() : "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Region:</span> {region || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Subregion:</span> {subregion || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Capital:</span> {Array.isArray(capital) && capital.length ? capital.join(", ") : "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Top Level Domain:</span> {Array.isArray(tld) && tld.length ? tld.join(", ") : "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Currencies:</span> {currencyStr}</p>
+            <p><span style={{ fontWeight: "600" }}>Border Countries:</span> {borderStr}</p>
+            <p><span style={{ fontWeight: "600" }}>Area:</span> {area ? `${area.toLocaleString()} km²` : "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Timezones:</span> {timezoneStr}</p>
+            <p><span style={{ fontWeight: "600" }}>Demonyms:</span> {demonymStr}</p>
+            <p><span style={{ fontWeight: "600" }}>IOC Code:</span> {cioc || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>FIFA Code:</span> {fifa || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Status:</span> {status || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Start Of Week:</span> {startOfWeek || "N/A"}</p>
+            <p><span style={{ fontWeight: "600" }}>Continents:</span> {continentStr}</p>
             {lat !== null && lng !== null && (
-              <p>
-                <span style={{ fontWeight: "600" }}>Coordinates: </span>
-                {lat.toFixed(2)}, {lng.toFixed(2)}
-              </p>
+              <p><span style={{ fontWeight: "600" }}>Coordinates:</span> {lat.toFixed(2)}, {lng.toFixed(2)}</p>
             )}
             {maps?.googleMaps && (
               <p>
@@ -242,9 +181,10 @@ export const CountryDetails = () => {
                 </a>
               </p>
             )}
+
             <div className="country-card-backBin">
               <NavLink to="/country" className="backBtn">
-              <button>Go Back</button>
+                <button>Go Back</button>
               </NavLink>
             </div>
           </div>
@@ -254,4 +194,4 @@ export const CountryDetails = () => {
   );
 };
 
-export default CountryDetails;
+

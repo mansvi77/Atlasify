@@ -1,4 +1,3 @@
-// src/components/Layout/CountryCard.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -28,15 +27,9 @@ export const CountryCard = ({ country }) => {
         <p style={{ fontWeight: "700", fontSize: "1.1rem", marginBottom: "0.5rem" }}>
           {name?.common.length > 15 ? name.common.slice(0, 15) + "..." : name?.common}
         </p>
-        <p>
-          <strong>Region:</strong> {region}
-        </p>
-        <p>
-          <strong>Capital:</strong> {Array.isArray(capital) ? capital[0] : "N/A"}
-        </p>
-        <p>
-          <strong>Population:</strong> {population?.toLocaleString()}
-        </p>
+        <p><strong>Region:</strong> {region}</p>
+        <p><strong>Capital:</strong> {Array.isArray(capital) ? capital[0] : "N/A"}</p>
+        <p><strong>Population:</strong> {population?.toLocaleString()}</p>
 
         {/* Circular Know More Button */}
         <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
@@ -72,5 +65,3 @@ export const CountryCard = ({ country }) => {
     </li>
   );
 };
-
-
